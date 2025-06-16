@@ -267,7 +267,11 @@ pub fn Ymlz(comptime Destination: type) type {
                     }
                 },
                 .@"struct" => {
-                    @field(destination, field.name) = try self.parse(field.type, depth + 1);
+                    const child_type = if (@typeInfo(field.type) == .optional)
+                        @typeInfo(field.type).optional.child
+                    else
+                        field.type;
+                    @field(destination, field.name) = try self.parse(child_type, depth + 1);
                 },
                 else => {
                     @panic("unexpected type recieved - " ++ @typeName(field.type) ++ "\n");
