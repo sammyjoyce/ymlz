@@ -182,7 +182,7 @@ pub fn Ymlz(comptime Destination: type) type {
 
         fn parse(self: *Self, comptime T: type, depth: usize) !T {
             var destination: T = undefined;
-            const destination_reflaction = @typeInfo(T);
+            const destination_reflaction = @typeInfo(@TypeOf(destination));
             var totalFieldsParsed: usize = 0;
 
             // Make sure nullify all optional fields first
